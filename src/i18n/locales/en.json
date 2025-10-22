@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "collegeFinder": "College Finder",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "quickActions": "Quick Actions",
+    "completeProfile": "Complete Profile",
+    "findColleges": "Find Colleges",
+    "upgradePremium": "Upgrade to Premium",
+    "advancedFeatures": "Advanced Features",
+    "searchesLeft": "free searches left"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "search": "Search",
+    "filter": "Filter",
+    "download": "Download"
+  },
+  "college": {
+    "name": "College Name",
+    "location": "Location",
+    "fees": "Fees",
+    "ranking": "Ranking",
+    "cutoff": "Cutoff",
+    "seats": "Seats"
+  }
+}

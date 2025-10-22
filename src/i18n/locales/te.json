@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "హోమ్",
+    "dashboard": "డాష్‌బోర్డ్",
+    "profile": "ప్రొఫైల్",
+    "collegeFinder": "కాలేజీలను కనుగొనండి",
+    "login": "లాగిన్",
+    "register": "రిజిస్టర్",
+    "logout": "లాగ్అవుట్"
+  },
+  "dashboard": {
+    "welcome": "తిరిగి స్వాగతం",
+    "quickActions": "త్వరిత చర్యలు",
+    "completeProfile": "ప్రొఫైల్ పూర్తి చేయండి",
+    "findColleges": "కాలేజీలను కనుగొనండి",
+    "upgradePremium": "ప్రీమియంకు అప్‌గ్రేడ్ చేయండి",
+    "advancedFeatures": "అధునాతన లక్షణాలు",
+    "searchesLeft": "ఉచిత శోధనలు మిగిలి ఉన్నాయి"
+  },
+  "common": {
+    "loading": "లోడ్ అవుతోంది...",
+    "save": "సేవ్ చేయండి",
+    "cancel": "రద్దు చేయండి",
+    "submit": "సమర్పించండి",
+    "back": "వెనుకకు",
+    "next": "తదుపరి",
+    "search": "శోధించండి",
+    "filter": "ఫిల్టర్",
+    "download": "డౌన్‌లోడ్"
+  },
+  "college": {
+    "name": "కాలేజీ పేరు",
+    "location": "స్థానం",
+    "fees": "ఫీజులు",
+    "ranking": "ర్యాంకింగ్",
+    "cutoff": "కట్‌ఆఫ్",
+    "seats": "సీట్లు"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "হোম",
+    "dashboard": "ড্যাশবোর্ড",
+    "profile": "প্রোফাইল",
+    "collegeFinder": "কলেজ খুঁজুন",
+    "login": "লগইন",
+    "register": "নিবন্ধন",
+    "logout": "লগআউট"
+  },
+  "dashboard": {
+    "welcome": "আবার স্বাগতম",
+    "quickActions": "দ্রুত কর্ম",
+    "completeProfile": "প্রোফাইল সম্পূর্ণ করুন",
+    "findColleges": "কলেজ খুঁজুন",
+    "upgradePremium": "প্রিমিয়ামে আপগ্রেড করুন",
+    "advancedFeatures": "উন্নত বৈশিষ্ট্য",
+    "searchesLeft": "বিনামূল্যে অনুসন্ধান বাকি আছে"
+  },
+  "common": {
+    "loading": "লোড হচ্ছে...",
+    "save": "সংরক্ষণ করুন",
+    "cancel": "বাতিল করুন",
+    "submit": "জমা দিন",
+    "back": "পিছনে",
+    "next": "পরবর্তী",
+    "search": "অনুসন্ধান",
+    "filter": "ফিল্টার",
+    "download": "ডাউনলোড"
+  },
+  "college": {
+    "name": "কলেজের নাম",
+    "location": "অবস্থান",
+    "fees": "ফি",
+    "ranking": "র‍্যাঙ্কিং",
+    "cutoff": "কাটঅফ",
+    "seats": "আসন"
+  }
+}
