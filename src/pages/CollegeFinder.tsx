@@ -1052,48 +1052,67 @@ export default function CollegeFinder() {
   };
 
   const proceedWithSearch = async () => {
-    setShowDisclaimer(false);
-    setLoading(true);
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Filter colleges based on criteria
-      const filteredColleges = mockColleges[selectedExam!.id]?.filter(college => {
-        return selectedBranches.some(branch => {
-          const cutoff = college.cutoffs[branch]?.[category];
-          if (!cutoff) return false;
-          
-          const userScore = parseFloat(score);
-          if (selectedExam!.scoreType === 'rank') {
-            return userScore <= cutoff;
-          } else {
-            return userScore >= cutoff;
-          }
-        });
-      }) || [];
+  setShowDisclaimer(false);
+  setLoading(true);
 
-      // Sort by popularity by default
-      const sortedColleges = [...filteredColleges].sort((a, b) => b.popularity_score - a.popularity_score);
-      
-      setResults(sortedColleges);
-      setFilteredResults(sortedColleges);
-      setStep(3);
-      
-      // Increment search count only if not premium user
-      if (user?.paymentStatus !== 'completed') {
-        incrementSearchCount();
-      }
-      
-      toast.success(`Found ${sortedColleges.length} matching colleges!`);
-    } catch (error) {
-      console.error('Search failed:', error);
-      toast.error('Search failed. Please try again.');
-    } finally {
-      setLoading(false);
+  try {
+    // Prepare request body
+    console.log(selectedExam);
+    const requestBody = {
+      score: parseFloat(score),
+      category: category.toLowerCase(),
+      selectedBranches: selectedBranches,
+    };
+
+    // Choose correct API endpoint based on selected exam
+    let apiUrl = "";
+    if (selectedExam?.id === "jee_main") {
+      apiUrl = "http://localhost:8080/api/jee-mains/eligible-colleges";
+    } else if (selectedExam?.id === "jee_advanced") {
+      apiUrl = "http://localhost:8080/api/jee-advanced/eligible-colleges";
+    } else if (selectedExam?.id === "neet") {
+      apiUrl = "http://localhost:8080/api/neet/eligible-colleges";
+    } else {
+      throw new Error("Invalid exam selection");
     }
-  };
+
+    // 🔥 Make POST request to backend
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch results from backend");
+    }
+
+    const data = await response.json();
+
+    // Sort by popularity_score (descending)
+    const sortedColleges = [...data].sort(
+      (a, b) => b.popularityScore - a.popularityScore
+    );
+
+    // Update UI state
+    setResults(sortedColleges);
+    setFilteredResults(sortedColleges);
+    setStep(3);
+
+    // Increment search count only if not premium user
+    if (user?.paymentStatus !== "completed") {
+      incrementSearchCount();
+    }
+
+    toast.success(`Found ${sortedColleges.length} matching colleges!`);
+  } catch (error) {
+    console.error("Search failed:", error);
+    toast.error("Search failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleFilterChange = (filterType: string) => {
     setFilterBy(filterType);
@@ -1412,6 +1431,7 @@ export default function CollegeFinder() {
                   placeholder={`Enter your ${getScoreLabel().toLowerCase()}`}
                   min="0"
                   max={selectedExam.maxScore}
+                  step="any"
                   className="w-full max-w-md px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-500 focus:border-transparent text-lg font-medium shadow-sm"
                 />
               </div>
@@ -1423,6 +1443,7 @@ export default function CollegeFinder() {
                   {selectedExam.categories.map((cat) => (
                     <button
                       key={cat}
+                      type="button"
                       onClick={() => setCategory(cat)}
                       className={`px-6 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 ${
                         category === cat
@@ -1446,6 +1467,7 @@ export default function CollegeFinder() {
                   {branches[selectedExam.id as keyof typeof branches]?.map((branch) => (
                     <button
                       key={branch}
+                      type="button"
                       onClick={() => handleBranchToggle(branch)}
                       className={`px-6 py-4 rounded-xl font-medium text-left transition-all duration-200 transform hover:scale-105 ${
                         selectedBranches.includes(branch)
