@@ -33,7 +33,7 @@ interface College {
   established: number;
   seats: number;
   highlights?: string[];
-  popularity_score: number;
+  popularityScore: number;
 }
 
 interface SelectedCollege extends College {
@@ -56,6 +56,7 @@ export default function CollegeFinder() {
   const [filterBy, setFilterBy] = useState('popularity');
   const [selectedColleges, setSelectedColleges] = useState<SelectedCollege[]>([]);
   const [showSelectionPanel, setShowSelectionPanel] = useState(false);
+  const [homeState, setHomeState] = useState('no');
 
   const exams: ExamData[] = [
     {
@@ -63,8 +64,8 @@ export default function CollegeFinder() {
       name: 'JEE Main',
       description: 'Joint Entrance Examination for Engineering',
       icon: <BookOpen className="w-8 h-8 text-blue-600" />,
-      scoreType: 'percentile',
-      maxScore: 100,
+      scoreType: 'rank',
+      maxScore: 1000000,
       categories: ['general', 'obc', 'sc', 'st', 'ews']
     },
     {
@@ -73,7 +74,7 @@ export default function CollegeFinder() {
       description: 'For admission to IITs',
       icon: <Award className="w-8 h-8 text-green-600" />,
       scoreType: 'rank',
-      maxScore: 50000,
+      maxScore: 100000,
       categories: ['general', 'obc', 'sc', 'st', 'ews']
     },
     {
@@ -106,7 +107,7 @@ export default function CollegeFinder() {
   ];
 
   const branches = {
-    jee_main: ['Computer Science Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Biotechnology'],
+    jee_main: ['Computer Science Engineering','Artificial Engineering','Data Science and Engineering','Information Technology', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering','Chemical Engineering', 'Aerospace Engineering', 'Biotechnology','Textile Technology','Instrumentation and Control Engineering', 'Mathematics and Computing','Industrial and Production Engineering','Mining Engineering','Metallurgy and Materials Engineering'],
     jee_advanced: ['Computer Science Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Materials Science'],
     neet: ['MBBS', 'BDS', 'BAMS', 'BHMS', 'BUMS', 'Veterinary Science', 'B.Sc Nursing', 'Physiotherapy'],
     gate: ['Computer Science', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Environmental Engineering'],
@@ -132,168 +133,7 @@ export default function CollegeFinder() {
         established: 1961,
         seats: 1200,
         highlights: ['Top IIT', 'Excellent Placements', 'Research Excellence'],
-        popularity_score: 98
-      },
-      {
-        id: '2',
-        name: 'National Institute of Technology, Trichy',
-        location: 'Tiruchirappalli, Tamil Nadu',
-        type: 'government',
-        rating: 4.6,
-        fees: 250000,
-        branches: ['Computer Science Engineering', 'Mechanical Engineering', 'Civil Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 98.8, obc: 98.5, sc: 97.8, st: 97.3, ews: 98.6 },
-          'Civil Engineering': { general: 97.2, obc: 96.9, sc: 96.2, st: 95.7, ews: 97.0 }
-        },
-        nirf_ranking: 15,
-        established: 1964,
-        seats: 800,
-        highlights: ['Premier NIT', 'Industry Connections', 'Strong Alumni'],
-        popularity_score: 92
-      },
-      {
-        id: '3',
-        name: 'Manipal Institute of Technology',
-        location: 'Manipal, Karnataka',
-        type: 'private',
-        rating: 4.4,
-        fees: 1500000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 95.5, obc: 95.2, sc: 94.5, st: 94.0, ews: 95.3 },
-          'Electronics Engineering': { general: 94.0, obc: 93.7, sc: 93.0, st: 92.5, ews: 93.8 }
-        },
-        established: 1957,
-        seats: 1500,
-        highlights: ['Modern Infrastructure', 'International Exposure', 'Industry Partnerships'],
-        popularity_score: 85
-      },
-      {
-        id: '4',
-        name: 'Delhi Technological University',
-        location: 'New Delhi',
-        type: 'government',
-        rating: 4.5,
-        fees: 180000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 98.5, obc: 98.2, sc: 97.5, st: 97.0, ews: 98.3 },
-          'Electronics Engineering': { general: 97.8, obc: 97.5, sc: 96.8, st: 96.3, ews: 97.6 }
-        },
-        nirf_ranking: 36,
-        established: 1941,
-        seats: 1000,
-        highlights: ['Delhi Location', 'Good Placements', 'Research Focus'],
-        popularity_score: 88
-      },
-      {
-        id: '5',
-        name: 'Birla Institute of Technology and Science, Pilani',
-        location: 'Pilani, Rajasthan',
-        type: 'private',
-        rating: 4.7,
-        fees: 1800000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 96.8, obc: 96.5, sc: 95.8, st: 95.3, ews: 96.6 },
-          'Electronics Engineering': { general: 95.5, obc: 95.2, sc: 94.5, st: 94.0, ews: 95.3 }
-        },
-        nirf_ranking: 25,
-        established: 1964,
-        seats: 2000,
-        highlights: ['Prestigious Private Institute', 'Innovation Hub', 'Global Recognition'],
-        popularity_score: 90
-      },
-      {
-        id: '6',
-        name: 'Vellore Institute of Technology',
-        location: 'Vellore, Tamil Nadu',
-        type: 'private',
-        rating: 4.3,
-        fees: 1200000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 92.5, obc: 92.2, sc: 91.5, st: 91.0, ews: 92.3 },
-          'Electronics Engineering': { general: 90.8, obc: 90.5, sc: 89.8, st: 89.3, ews: 90.6 }
-        },
-        nirf_ranking: 45,
-        established: 1984,
-        seats: 3000,
-        highlights: ['Large Campus', 'Diverse Programs', 'Industry Connect'],
-        popularity_score: 82
-      },
-      {
-        id: '7',
-        name: 'Jadavpur University',
-        location: 'Kolkata, West Bengal',
-        type: 'government',
-        rating: 4.6,
-        fees: 150000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 97.8, obc: 97.5, sc: 96.8, st: 96.3, ews: 97.6 },
-          'Electronics Engineering': { general: 96.5, obc: 96.2, sc: 95.5, st: 95.0, ews: 96.3 }
-        },
-        nirf_ranking: 42,
-        established: 1955,
-        seats: 800,
-        highlights: ['Heritage Institution', 'Strong Engineering', 'Cultural Hub'],
-        popularity_score: 86
-      },
-      {
-        id: '8',
-        name: 'Indian Institute of Technology, Roorkee',
-        location: 'Roorkee, Uttarakhand',
-        type: 'government',
-        rating: 4.7,
-        fees: 210000,
-        branches: ['Computer Science Engineering', 'Civil Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 99.3, obc: 99.0, sc: 98.3, st: 97.8, ews: 99.1 },
-          'Civil Engineering': { general: 98.5, obc: 98.2, sc: 97.5, st: 97.0, ews: 98.3 }
-        },
-        nirf_ranking: 8,
-        established: 1847,
-        seats: 1100,
-        highlights: ['Oldest Technical Institute', 'Civil Engineering Pioneer', 'Research Excellence'],
-        popularity_score: 95
-      },
-      {
-        id: '9',
-        name: 'National Institute of Technology, Warangal',
-        location: 'Warangal, Telangana',
-        type: 'government',
-        rating: 4.5,
-        fees: 240000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Chemical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 98.2, obc: 97.9, sc: 97.2, st: 96.7, ews: 98.0 },
-          'Electronics Engineering': { general: 97.0, obc: 96.7, sc: 96.0, st: 95.5, ews: 96.8 }
-        },
-        nirf_ranking: 19,
-        established: 1959,
-        seats: 900,
-        highlights: ['Top NIT', 'Strong Alumni Network', 'Research Focus'],
-        popularity_score: 89
-      },
-      {
-        id: '10',
-        name: 'Indian Institute of Technology, Guwahati',
-        location: 'Guwahati, Assam',
-        type: 'government',
-        rating: 4.6,
-        fees: 220000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 98.8, obc: 98.5, sc: 97.8, st: 97.3, ews: 98.6 },
-          'Electronics Engineering': { general: 97.5, obc: 97.2, sc: 96.5, st: 96.0, ews: 97.3 }
-        },
-        nirf_ranking: 12,
-        established: 1994,
-        seats: 1000,
-        highlights: ['Scenic Campus', 'Research Excellence', 'Northeast Hub'],
-        popularity_score: 91
+        popularityScore: 98
       }
     ],
     neet: [
@@ -313,7 +153,7 @@ export default function CollegeFinder() {
         established: 1956,
         seats: 125,
         highlights: ['Premier Medical Institute', 'Excellent Faculty', 'Research Excellence'],
-        popularity_score: 99
+        popularityScore: 99
       },
       {
         id: '32',
@@ -331,148 +171,7 @@ export default function CollegeFinder() {
         established: 1900,
         seats: 100,
         highlights: ['Christian Institution', 'Heritage College', 'Excellent Healthcare'],
-        popularity_score: 96
-      },
-      {
-        id: '33',
-        name: 'King George Medical University',
-        location: 'Lucknow, Uttar Pradesh',
-        type: 'government',
-        rating: 4.6,
-        fees: 80000,
-        branches: ['MBBS', 'BDS', 'BAMS'],
-        cutoffs: {
-          'MBBS': { general: 680, obc: 661, sc: 572, st: 563, ews: 675 },
-          'BDS': { general: 640, obc: 621, sc: 532, st: 523, ews: 635 },
-          'BAMS': { general: 520, obc: 501, sc: 412, st: 403, ews: 515 }
-        },
-        established: 1905,
-        seats: 250,
-        highlights: ['Government Medical College', 'Good Infrastructure', 'Affordable Fees'],
-        popularity_score: 88
-      },
-      {
-        id: '34',
-        name: 'Maulana Azad Medical College',
-        location: 'New Delhi',
-        type: 'government',
-        rating: 4.7,
-        fees: 60000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 695, obc: 676, sc: 587, st: 578, ews: 690 },
-          'BDS': { general: 655, obc: 636, sc: 547, st: 538, ews: 650 }
-        },
-        nirf_ranking: 8,
-        established: 1958,
-        seats: 250,
-        highlights: ['Delhi Location', 'Government College', 'Good Clinical Exposure'],
-        popularity_score: 92
-      },
-      {
-        id: '35',
-        name: 'Armed Forces Medical College',
-        location: 'Pune, Maharashtra',
-        type: 'government',
-        rating: 4.8,
-        fees: 40000,
-        branches: ['MBBS'],
-        cutoffs: {
-          'MBBS': { general: 710, obc: 691, sc: 602, st: 593, ews: 705 }
-        },
-        nirf_ranking: 5,
-        established: 1948,
-        seats: 130,
-        highlights: ['Military Medical College', 'Excellent Discipline', 'Top Faculty'],
-        popularity_score: 94
-      },
-      {
-        id: '36',
-        name: 'Grant Medical College',
-        location: 'Mumbai, Maharashtra',
-        type: 'government',
-        rating: 4.5,
-        fees: 70000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 670, obc: 651, sc: 562, st: 553, ews: 665 },
-          'BDS': { general: 630, obc: 611, sc: 522, st: 513, ews: 625 }
-        },
-        established: 1845,
-        seats: 200,
-        highlights: ['Heritage Medical College', 'Mumbai Location', 'Good Clinical Training'],
-        popularity_score: 85
-      },
-      {
-        id: '37',
-        name: 'Kasturba Medical College, Manipal',
-        location: 'Manipal, Karnataka',
-        type: 'private',
-        rating: 4.6,
-        fees: 1800000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 650, obc: 631, sc: 542, st: 533, ews: 645 },
-          'BDS': { general: 610, obc: 591, sc: 502, st: 493, ews: 605 }
-        },
-        nirf_ranking: 12,
-        established: 1953,
-        seats: 150,
-        highlights: ['Private Medical College', 'Good Infrastructure', 'International Recognition'],
-        popularity_score: 83
-      },
-      {
-        id: '38',
-        name: 'St. Johns Medical College',
-        location: 'Bangalore, Karnataka',
-        type: 'private',
-        rating: 4.7,
-        fees: 1900000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 665, obc: 646, sc: 557, st: 548, ews: 660 },
-          'BDS': { general: 625, obc: 606, sc: 517, st: 508, ews: 620 }
-        },
-        nirf_ranking: 15,
-        established: 1963,
-        seats: 150,
-        highlights: ['Christian Medical College', 'Bangalore Location', 'Quality Education'],
-        popularity_score: 87
-      },
-      {
-        id: '39',
-        name: 'Jawaharlal Institute of Postgraduate Medical Education',
-        location: 'Puducherry',
-        type: 'government',
-        rating: 4.6,
-        fees: 45000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 675, obc: 656, sc: 567, st: 558, ews: 670 },
-          'BDS': { general: 635, obc: 616, sc: 527, st: 518, ews: 630 }
-        },
-        nirf_ranking: 18,
-        established: 1964,
-        seats: 200,
-        highlights: ['Central Government Institute', 'Research Focus', 'Good Faculty'],
-        popularity_score: 89
-      },
-      {
-        id: '40',
-        name: 'Madras Medical College',
-        location: 'Chennai, Tamil Nadu',
-        type: 'government',
-        rating: 4.5,
-        fees: 55000,
-        branches: ['MBBS', 'BDS'],
-        cutoffs: {
-          'MBBS': { general: 660, obc: 641, sc: 552, st: 543, ews: 655 },
-          'BDS': { general: 620, obc: 601, sc: 512, st: 503, ews: 615 }
-        },
-        established: 1835,
-        seats: 250,
-        highlights: ['Oldest Medical College', 'Chennai Location', 'Heritage Institution'],
-        popularity_score: 84
+        popularityScore: 96
       }
     ],
     cat: [
@@ -492,7 +191,7 @@ export default function CollegeFinder() {
         established: 1961,
         seats: 400,
         highlights: ['Top IIM', 'Excellent Placements', 'Global Recognition'],
-        popularity_score: 99
+        popularityScore: 99
       },
       {
         id: '92',
@@ -510,151 +209,7 @@ export default function CollegeFinder() {
         established: 1973,
         seats: 400,
         highlights: ['Premier IIM', 'Bangalore Location', 'Industry Connect'],
-        popularity_score: 97
-      },
-      {
-        id: '93',
-        name: 'XLRI - Xavier School of Management',
-        location: 'Jamshedpur, Jharkhand',
-        type: 'private',
-        rating: 4.7,
-        fees: 2200000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 98.5, obc: 98.2, sc: 97.5, st: 97.0, ews: 98.3 },
-          'PGDM': { general: 98.0, obc: 97.7, sc: 97.0, st: 96.5, ews: 97.8 }
-        },
-        nirf_ranking: 8,
-        established: 1949,
-        seats: 350,
-        highlights: ['Jesuit Institution', 'HR Excellence', 'Strong Alumni'],
-        popularity_score: 93
-      },
-      {
-        id: '94',
-        name: 'Indian Institute of Management, Calcutta',
-        location: 'Kolkata, West Bengal',
-        type: 'government',
-        rating: 4.8,
-        fees: 2300000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 99.2, obc: 98.9, sc: 98.2, st: 97.7, ews: 99.0 },
-          'PGDM': { general: 98.7, obc: 98.4, sc: 97.7, st: 97.2, ews: 98.5 }
-        },
-        nirf_ranking: 3,
-        established: 1961,
-        seats: 460,
-        highlights: ['Heritage IIM', 'Kolkata Location', 'Academic Excellence'],
-        popularity_score: 95
-      },
-      {
-        id: '95',
-        name: 'Indian School of Business',
-        location: 'Hyderabad, Telangana',
-        type: 'private',
-        rating: 4.7,
-        fees: 3500000,
-        branches: ['MBA', 'Executive MBA'],
-        cutoffs: {
-          'MBA': { general: 98.8, obc: 98.5, sc: 97.8, st: 97.3, ews: 98.6 },
-          'Executive MBA': { general: 97.5, obc: 97.2, sc: 96.5, st: 96.0, ews: 97.3 }
-        },
-        nirf_ranking: 5,
-        established: 2001,
-        seats: 900,
-        highlights: ['International Faculty', 'Global Rankings', 'Industry Partnerships'],
-        popularity_score: 91
-      },
-      {
-        id: '96',
-        name: 'Faculty of Management Studies, Delhi',
-        location: 'New Delhi',
-        type: 'government',
-        rating: 4.6,
-        fees: 200000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 97.8, obc: 97.5, sc: 96.8, st: 96.3, ews: 97.6 },
-          'PGDM': { general: 97.3, obc: 97.0, sc: 96.3, st: 95.8, ews: 97.1 }
-        },
-        nirf_ranking: 12,
-        established: 1954,
-        seats: 220,
-        highlights: ['Delhi University', 'Affordable Fees', 'Good Placements'],
-        popularity_score: 88
-      },
-      {
-        id: '97',
-        name: 'SP Jain Institute of Management and Research',
-        location: 'Mumbai, Maharashtra',
-        type: 'private',
-        rating: 4.5,
-        fees: 1800000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 96.5, obc: 96.2, sc: 95.5, st: 95.0, ews: 96.3 },
-          'PGDM': { general: 96.0, obc: 95.7, sc: 95.0, st: 94.5, ews: 95.8 }
-        },
-        nirf_ranking: 18,
-        established: 1981,
-        seats: 300,
-        highlights: ['Mumbai Location', 'Industry Connect', 'Finance Specialization'],
-        popularity_score: 85
-      },
-      {
-        id: '98',
-        name: 'Indian Institute of Management, Lucknow',
-        location: 'Lucknow, Uttar Pradesh',
-        type: 'government',
-        rating: 4.6,
-        fees: 2000000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 97.5, obc: 97.2, sc: 96.5, st: 96.0, ews: 97.3 },
-          'PGDM': { general: 97.0, obc: 96.7, sc: 96.0, st: 95.5, ews: 96.8 }
-        },
-        nirf_ranking: 6,
-        established: 1984,
-        seats: 440,
-        highlights: ['Newer IIM', 'Growing Reputation', 'Good Infrastructure'],
-        popularity_score: 89
-      },
-      {
-        id: '99',
-        name: 'Management Development Institute',
-        location: 'Gurgaon, Haryana',
-        type: 'government',
-        rating: 4.5,
-        fees: 2100000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 96.8, obc: 96.5, sc: 95.8, st: 95.3, ews: 96.6 },
-          'PGDM': { general: 96.3, obc: 96.0, sc: 95.3, st: 94.8, ews: 96.1 }
-        },
-        nirf_ranking: 15,
-        established: 1973,
-        seats: 480,
-        highlights: ['NCR Location', 'HR Focus', 'Industry Partnerships'],
-        popularity_score: 86
-      },
-      {
-        id: '100',
-        name: 'Indian Institute of Management, Kozhikode',
-        location: 'Kozhikode, Kerala',
-        type: 'government',
-        rating: 4.6,
-        fees: 2050000,
-        branches: ['MBA', 'PGDM'],
-        cutoffs: {
-          'MBA': { general: 97.2, obc: 96.9, sc: 96.2, st: 95.7, ews: 97.0 },
-          'PGDM': { general: 96.7, obc: 96.4, sc: 95.7, st: 95.2, ews: 96.5 }
-        },
-        nirf_ranking: 7,
-        established: 1996,
-        seats: 440,
-        highlights: ['Kerala Location', 'Coastal Campus', 'Academic Excellence'],
-        popularity_score: 87
+        popularityScore: 97
       }
     ],
     gate: [
@@ -674,7 +229,7 @@ export default function CollegeFinder() {
         established: 1909,
         seats: 300,
         highlights: ['Premier Research Institute', 'Excellent Faculty', 'Innovation Hub'],
-        popularity_score: 99
+        popularityScore: 99
       },
       {
         id: '122',
@@ -692,7 +247,7 @@ export default function CollegeFinder() {
         established: 1959,
         seats: 400,
         highlights: ['Top IIT', 'Research Excellence', 'Strong Alumni'],
-        popularity_score: 96
+        popularityScore: 96
       },
       {
         id: '123',
@@ -710,133 +265,7 @@ export default function CollegeFinder() {
         established: 1958,
         seats: 450,
         highlights: ['Mumbai Location', 'Industry Connect', 'Premier IIT'],
-        popularity_score: 97
-      },
-      {
-        id: '124',
-        name: 'Indian Institute of Technology, Delhi',
-        location: 'New Delhi',
-        type: 'government',
-        rating: 4.8,
-        fees: 185000,
-        branches: ['Computer Science', 'Mechanical Engineering', 'Civil Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 825, obc: 795, sc: 725, st: 695, ews: 815 },
-          'Mechanical Engineering': { general: 785, obc: 755, sc: 685, st: 655, ews: 775 }
-        },
-        nirf_ranking: 2,
-        established: 1961,
-        seats: 420,
-        highlights: ['Delhi Location', 'Top IIT', 'Research Focus'],
-        popularity_score: 98
-      },
-      {
-        id: '125',
-        name: 'Indian Institute of Technology, Madras',
-        location: 'Chennai, Tamil Nadu',
-        type: 'government',
-        rating: 4.7,
-        fees: 175000,
-        branches: ['Computer Science', 'Electrical Engineering', 'Aerospace Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 815, obc: 785, sc: 715, st: 685, ews: 805 },
-          'Electrical Engineering': { general: 775, obc: 745, sc: 675, st: 645, ews: 765 }
-        },
-        nirf_ranking: 5,
-        established: 1959,
-        seats: 380,
-        highlights: ['Chennai Location', 'Strong Engineering', 'Research Excellence'],
-        popularity_score: 94
-      },
-      {
-        id: '126',
-        name: 'Indian Institute of Technology, Kharagpur',
-        location: 'Kharagpur, West Bengal',
-        type: 'government',
-        rating: 4.7,
-        fees: 170000,
-        branches: ['Computer Science', 'Mechanical Engineering', 'Electronics Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 810, obc: 780, sc: 710, st: 680, ews: 800 },
-          'Mechanical Engineering': { general: 770, obc: 740, sc: 670, st: 640, ews: 760 }
-        },
-        nirf_ranking: 6,
-        established: 1951,
-        seats: 500,
-        highlights: ['First IIT', 'Large Campus', 'Heritage Institution'],
-        popularity_score: 92
-      },
-      {
-        id: '127',
-        name: 'Indian Institute of Technology, Roorkee',
-        location: 'Roorkee, Uttarakhand',
-        type: 'government',
-        rating: 4.7,
-        fees: 175000,
-        branches: ['Computer Science', 'Civil Engineering', 'Electrical Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 805, obc: 775, sc: 705, st: 675, ews: 795 },
-          'Civil Engineering': { general: 750, obc: 720, sc: 650, st: 620, ews: 740 }
-        },
-        nirf_ranking: 8,
-        established: 1847,
-        seats: 350,
-        highlights: ['Oldest Technical Institute', 'Civil Engineering Pioneer', 'Heritage'],
-        popularity_score: 90
-      },
-      {
-        id: '128',
-        name: 'National Institute of Technology, Trichy',
-        location: 'Tiruchirappalli, Tamil Nadu',
-        type: 'government',
-        rating: 4.6,
-        fees: 160000,
-        branches: ['Computer Science', 'Mechanical Engineering', 'Electronics Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 780, obc: 750, sc: 680, st: 650, ews: 770 },
-          'Mechanical Engineering': { general: 740, obc: 710, sc: 640, st: 610, ews: 730 }
-        },
-        nirf_ranking: 15,
-        established: 1964,
-        seats: 300,
-        highlights: ['Premier NIT', 'Tamil Nadu Location', 'Strong Alumni'],
-        popularity_score: 88
-      },
-      {
-        id: '129',
-        name: 'Indian Institute of Technology, Guwahati',
-        location: 'Guwahati, Assam',
-        type: 'government',
-        rating: 4.6,
-        fees: 165000,
-        branches: ['Computer Science', 'Electronics Engineering', 'Chemical Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 795, obc: 765, sc: 695, st: 665, ews: 785 },
-          'Electronics Engineering': { general: 755, obc: 725, sc: 655, st: 625, ews: 745 }
-        },
-        nirf_ranking: 12,
-        established: 1994,
-        seats: 320,
-        highlights: ['Scenic Campus', 'Northeast Hub', 'Growing Reputation'],
-        popularity_score: 86
-      },
-      {
-        id: '130',
-        name: 'Indian Institute of Technology, Hyderabad',
-        location: 'Hyderabad, Telangana',
-        type: 'government',
-        rating: 4.6,
-        fees: 170000,
-        branches: ['Computer Science', 'Electrical Engineering', 'Chemical Engineering'],
-        cutoffs: {
-          'Computer Science': { general: 790, obc: 760, sc: 690, st: 660, ews: 780 },
-          'Electrical Engineering': { general: 750, obc: 720, sc: 650, st: 620, ews: 740 }
-        },
-        nirf_ranking: 14,
-        established: 2008,
-        seats: 280,
-        highlights: ['New IIT', 'Hyderabad Location', 'Modern Infrastructure'],
-        popularity_score: 84
+        popularityScore: 97
       }
     ],
     jee_advanced: [
@@ -856,7 +285,7 @@ export default function CollegeFinder() {
         established: 1958,
         seats: 800,
         highlights: ['Top IIT', 'Mumbai Location', 'Excellent Placements'],
-        popularity_score: 99
+        popularityScore: 99
       },
       {
         id: '152',
@@ -874,151 +303,7 @@ export default function CollegeFinder() {
         established: 1961,
         seats: 850,
         highlights: ['Premier IIT', 'Delhi Location', 'Research Excellence'],
-        popularity_score: 98
-      },
-      {
-        id: '153',
-        name: 'Indian Institute of Technology, Kanpur',
-        location: 'Kanpur, Uttar Pradesh',
-        type: 'government',
-        rating: 4.8,
-        fees: 210000,
-        branches: ['Computer Science Engineering', 'Mechanical Engineering', 'Electrical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 89, obc: 112, sc: 215, st: 285, ews: 98 },
-          'Mechanical Engineering': { general: 195, obc: 248, sc: 385, st: 512, ews: 215 }
-        },
-        nirf_ranking: 4,
-        established: 1959,
-        seats: 780,
-        highlights: ['Historic IIT', 'Strong Alumni', 'Academic Excellence'],
-        popularity_score: 96
-      },
-      {
-        id: '154',
-        name: 'Indian Institute of Technology, Madras',
-        location: 'Chennai, Tamil Nadu',
-        type: 'government',
-        rating: 4.8,
-        fees: 205000,
-        branches: ['Computer Science Engineering', 'Electrical Engineering', 'Aerospace Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 92, obc: 118, sc: 225, st: 295, ews: 102 },
-          'Electrical Engineering': { general: 185, obc: 235, sc: 365, st: 485, ews: 205 }
-        },
-        nirf_ranking: 5,
-        established: 1959,
-        seats: 720,
-        highlights: ['Chennai Location', 'Strong Engineering', 'Research Focus'],
-        popularity_score: 95
-      },
-      {
-        id: '155',
-        name: 'Indian Institute of Technology, Kharagpur',
-        location: 'Kharagpur, West Bengal',
-        type: 'government',
-        rating: 4.7,
-        fees: 200000,
-        branches: ['Computer Science Engineering', 'Mechanical Engineering', 'Electronics Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 105, obc: 135, sc: 255, st: 325, ews: 118 },
-          'Mechanical Engineering': { general: 225, obc: 285, sc: 425, st: 565, ews: 248 }
-        },
-        nirf_ranking: 6,
-        established: 1951,
-        seats: 900,
-        highlights: ['First IIT', 'Large Campus', 'Heritage Institution'],
-        popularity_score: 93
-      },
-      {
-        id: '156',
-        name: 'Indian Institute of Technology, Roorkee',
-        location: 'Roorkee, Uttarakhand',
-        type: 'government',
-        rating: 4.7,
-        fees: 208000,
-        branches: ['Computer Science Engineering', 'Civil Engineering', 'Electrical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 98, obc: 125, sc: 235, st: 305, ews: 108 },
-          'Civil Engineering': { general: 285, obc: 365, sc: 545, st: 725, ews: 315 }
-        },
-        nirf_ranking: 8,
-        established: 1847,
-        seats: 650,
-        highlights: ['Oldest Technical Institute', 'Civil Engineering Pioneer', 'Heritage'],
-        popularity_score: 91
-      },
-      {
-        id: '157',
-        name: 'Indian Institute of Technology, Guwahati',
-        location: 'Guwahati, Assam',
-        type: 'government',
-        rating: 4.6,
-        fees: 195000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Chemical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 125, obc: 158, sc: 295, st: 385, ews: 138 },
-          'Electronics Engineering': { general: 265, obc: 335, sc: 495, st: 655, ews: 285 }
-        },
-        nirf_ranking: 12,
-        established: 1994,
-        seats: 580,
-        highlights: ['Scenic Campus', 'Northeast Hub', 'Growing Reputation'],
-        popularity_score: 88
-      },
-      {
-        id: '158',
-        name: 'Indian Institute of Technology, Hyderabad',
-        location: 'Hyderabad, Telangana',
-        type: 'government',
-        rating: 4.6,
-        fees: 198000,
-        branches: ['Computer Science Engineering', 'Electrical Engineering', 'Chemical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 135, obc: 172, sc: 315, st: 405, ews: 148 },
-          'Electrical Engineering': { general: 285, obc: 365, sc: 535, st: 705, ews: 315 }
-        },
-        nirf_ranking: 14,
-        established: 2008,
-        seats: 520,
-        highlights: ['New IIT', 'Hyderabad Location', 'Modern Infrastructure'],
-        popularity_score: 86
-      },
-      {
-        id: '159',
-        name: 'Indian Institute of Technology, Indore',
-        location: 'Indore, Madhya Pradesh',
-        type: 'government',
-        rating: 4.5,
-        fees: 192000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 148, obc: 188, sc: 345, st: 445, ews: 165 },
-          'Electronics Engineering': { general: 315, obc: 395, sc: 575, st: 755, ews: 345 }
-        },
-        nirf_ranking: 16,
-        established: 2009,
-        seats: 480,
-        highlights: ['New IIT', 'Central India', 'Growing Reputation'],
-        popularity_score: 84
-      },
-      {
-        id: '160',
-        name: 'Indian Institute of Technology, Bhubaneswar',
-        location: 'Bhubaneswar, Odisha',
-        type: 'government',
-        rating: 4.5,
-        fees: 190000,
-        branches: ['Computer Science Engineering', 'Electronics Engineering', 'Mechanical Engineering'],
-        cutoffs: {
-          'Computer Science Engineering': { general: 155, obc: 195, sc: 355, st: 455, ews: 172 },
-          'Electronics Engineering': { general: 325, obc: 405, sc: 585, st: 765, ews: 355 }
-        },
-        nirf_ranking: 18,
-        established: 2008,
-        seats: 460,
-        highlights: ['New IIT', 'Odisha Location', 'Modern Facilities'],
-        popularity_score: 82
+        popularityScore: 98
       }
     ]
   };
@@ -1056,12 +341,16 @@ export default function CollegeFinder() {
   setLoading(true);
 
   try {
+
+    const userId = user?.id;
     // Prepare request body
     console.log(selectedExam);
     const requestBody = {
       score: parseFloat(score),
       category: category.toLowerCase(),
       selectedBranches: selectedBranches,
+      ...(selectedExam?.id === "jee_main" && { homeState: homeState === "yes" }),
+      userId,
     };
 
     // Choose correct API endpoint based on selected exam
@@ -1119,8 +408,8 @@ export default function CollegeFinder() {
     let sortedResults = [...results];
 
     switch (filterType) {
-      case 'popularity':
-        sortedResults.sort((a, b) => b.popularity_score - a.popularity_score);
+      case 'popularityScore':
+        sortedResults.sort((a, b) => b.popularityScore - a.popularityScore);
         break;
       case 'nirf':
         sortedResults.sort((a, b) => (a.nirf_ranking || 999) - (b.nirf_ranking || 999));
@@ -1457,6 +746,23 @@ export default function CollegeFinder() {
                 </div>
               </div>
 
+              {selectedExam?.id === 'jee_main' && (
+                  <div className="mb-6">
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Home State Quota
+                    </label>
+                    <select
+                      value={homeState}
+                      onChange={(e) => setHomeState(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                )}
+
+
               {/* Enhanced Branch Selection */}
               <div>
                 <label className="block text-xl font-semibold text-gray-900 mb-6">
@@ -1682,7 +988,7 @@ export default function CollegeFinder() {
                               </span>
                             )}
                             <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-semibold">
-                              Popularity: {college.popularity_score}
+                              Popularity: {college.popularityScore}
                             </span>
                           </div>
                         </div>
