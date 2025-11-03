@@ -349,7 +349,7 @@ export default function CollegeFinder() {
       score: parseFloat(score),
       category: category.toLowerCase(),
       selectedBranches: selectedBranches,
-      ...(selectedExam?.id === "jee_main" && { homeState: homeState === "yes" }),
+      ...((selectedExam?.id === "jee_main") && { homeState: homeState === "yes" }),
       userId,
     };
 
