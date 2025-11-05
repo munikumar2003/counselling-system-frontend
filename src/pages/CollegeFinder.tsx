@@ -108,7 +108,7 @@ export default function CollegeFinder() {
 
   const branches = {
     jee_main: ['Computer Science Engineering','Artificial Engineering','Data Science and Engineering','Information Technology', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering','Chemical Engineering', 'Aerospace Engineering', 'Biotechnology','Textile Technology','Instrumentation and Control Engineering', 'Mathematics and Computing','Industrial and Production Engineering','Mining Engineering','Metallurgy and Materials Engineering'],
-    jee_advanced: ['Computer Science Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Metallurgical Engineering','Environmental Science and Engineering','Industrial Engineering'],
+    jee_advanced: ['Computer Science Engineering','Data Science and Artificial Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Metallurgical Engineering','Environmental Science and Engineering','Industrial Engineering'],
     neet: ['MBBS', 'BDS', 'BAMS', 'BHMS', 'BUMS', 'Veterinary Science', 'B.Sc Nursing', 'Physiotherapy'],
     gate: ['Computer Science', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Environmental Engineering'],
     cat: ['MBA', 'PGDM', 'Executive MBA', 'MBA in Finance', 'MBA in Marketing', 'MBA in HR', 'MBA in Operations', 'MBA in International Business']
