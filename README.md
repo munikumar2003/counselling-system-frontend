@@ -80,8 +80,8 @@ README.md       — this file
 
 <h2>👤 Author</h2>
 <p><strong>Muni Kumar Chemuru</strong><br>
-BTech (Data Science), Sree Vidyanikethan Engineering College<br>
-Java Developer (HackerRank Gold – 5★) | Aspiring Software Engineer & Data Analyst
+MTech - CSE , NIT Srinagar<br>
+Java Developer | Aspiring Software Engineer & Data Analyst
 </p>
 
 <p><em>Thank you for checking out this project! Contributions and feedback are welcome.</em></p>
