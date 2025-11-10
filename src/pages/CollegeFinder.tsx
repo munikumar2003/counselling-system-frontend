@@ -110,7 +110,7 @@ export default function CollegeFinder() {
     jee_main: ['Computer Science Engineering','Artificial Engineering','Data Science and Engineering','Information Technology', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering','Chemical Engineering', 'Aerospace Engineering', 'Biotechnology','Textile Technology','Instrumentation and Control Engineering', 'Mathematics and Computing','Industrial and Production Engineering','Mining Engineering','Metallurgy and Materials Engineering'],
     jee_advanced: ['Computer Science Engineering','Data Science and Artificial Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Metallurgical Engineering','Environmental Science and Engineering','Industrial Engineering'],
     neet: ['MBBS', 'BDS', 'BAMS', 'BHMS', 'BUMS', 'Veterinary Science', 'B.Sc Nursing', 'Physiotherapy'],
-    gate: ['Computer Science', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Environmental Engineering'],
+    gate: ['Computer Science Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering', 'Electronics Engineering', 'Chemical Engineering', 'Aerospace Engineering', 'Environmental Engineering'],
     cat: ['MBA', 'PGDM', 'Executive MBA', 'MBA in Finance', 'MBA in Marketing', 'MBA in HR', 'MBA in Operations', 'MBA in International Business']
   };
 
@@ -361,6 +361,8 @@ export default function CollegeFinder() {
       apiUrl = "http://localhost:8080/api/jee-advanced/eligible-colleges";
     } else if (selectedExam?.id === "neet") {
       apiUrl = "http://localhost:8080/api/neet/eligible-colleges";
+    }else if (selectedExam?.id === "gate") {
+      apiUrl = "http://localhost:8080/api/gate/eligible-colleges";
     } else {
       throw new Error("Invalid exam selection");
     }
