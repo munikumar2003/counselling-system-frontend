@@ -363,6 +363,8 @@ export default function CollegeFinder() {
       apiUrl = "http://localhost:8080/api/neet/eligible-colleges";
     }else if (selectedExam?.id === "gate") {
       apiUrl = "http://localhost:8080/api/gate/eligible-colleges";
+    }else if (selectedExam?.id === "cat") {
+      apiUrl = "http://localhost:8080/api/cat/eligible-colleges";
     } else {
       throw new Error("Invalid exam selection");
     }
