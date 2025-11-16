@@ -455,7 +455,6 @@ export default function CollegeFinder() {
     if (index > 0) {
       const newList = [...selectedColleges];
       [newList[index], newList[index - 1]] = [newList[index - 1], newList[index]];
-      // Update preferences
       newList.forEach((college, idx) => {
         college.preference = idx + 1;
       });
@@ -467,7 +466,6 @@ export default function CollegeFinder() {
     if (index < selectedColleges.length - 1) {
       const newList = [...selectedColleges];
       [newList[index], newList[index + 1]] = [newList[index + 1], newList[index]];
-      // Update preferences
       newList.forEach((college, idx) => {
         college.preference = idx + 1;
       });
@@ -478,7 +476,6 @@ export default function CollegeFinder() {
   const removeCollege = (collegeId: string) => {
     setSelectedColleges(prev => {
       const filtered = prev.filter(c => c.id !== collegeId);
-      // Update preferences
       return filtered.map((college, idx) => ({
         ...college,
         preference: idx + 1
@@ -495,12 +492,8 @@ export default function CollegeFinder() {
 
     try {
       const pdf = new jsPDF();
-      
-      // Add title
       pdf.setFontSize(20);
       pdf.text('My College Preferences', 20, 30);
-      
-      // Add user info
       pdf.setFontSize(12);
       pdf.text(`Student: ${user?.firstName} ${user?.lastName}`, 20, 50);
       pdf.text(`Exam: ${selectedExam?.name}`, 20, 60);
@@ -508,7 +501,6 @@ export default function CollegeFinder() {
       pdf.text(`Category: ${category.toUpperCase()}`, 20, 80);
       pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 90);
       
-      // Add colleges
       let yPosition = 110;
       selectedColleges.forEach((college, index) => {
         if (yPosition > 250) {
@@ -544,7 +536,6 @@ export default function CollegeFinder() {
     }
   };
 
-  // Free trial warning component
   const FreeTrialWarning = () => {
     if (user?.paymentStatus === 'completed') return null;
     
