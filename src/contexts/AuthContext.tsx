@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User } from '../types';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-//import api from '../api/axiosConfig';
+import api from '../api/axiosConfig';
 
 interface AuthContextType {
   user: User | null;
